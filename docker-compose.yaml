@@ -1,0 +1,42 @@
+# Services
+services:
+
+  # PostgreSQL
+  postgresql_db:
+    image: postgres:15.2
+    container_name: postgresql_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - my-network
+
+  # Adminer
+  adminer_panel:
+    image: adminer:4.8.1
+    container_name: adminer_panel
+    restart: always
+    ports:
+      - 9090:8080
+    environment:
+      ADMINER_DEFAULT_SERVER: postgresql_db
+      ADMINER_DESIGN: pepa-linha
+    depends_on:
+      - postgresql_db
+    networks:
+      - my-network
+
+# Volumes
+volumes:
+  postgres_data:
+
+# Networks
+networks:
+  my-network:
+    driver: bridge
