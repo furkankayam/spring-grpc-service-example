@@ -1,4 +1,4 @@
-## 👛 `Spring GRPC Service Example`
+## 📄 `Spring GRPC Service Example`
 
 <br>
 
